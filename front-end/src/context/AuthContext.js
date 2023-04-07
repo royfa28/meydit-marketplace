@@ -25,12 +25,9 @@ export function AuthProvider(props) {
     };
 
     // login authentication
-    const loginAuth = async (email, password) => {
+    const loginAuth = async (account) => {
         try {
-            const response = await axios.post('/api/auth/login', {
-                email,
-                password,
-            });
+            const response = await axios.post('/api/auth/login', { account });
             localStorage.setItem('token', response.data.token);
             console.log("login");
             setLoggedIn(true);
@@ -43,9 +40,20 @@ export function AuthProvider(props) {
         }
     };
 
+    const addAccount = async (account) => {
+        try {
+            const response = await axios.post('/api/register', account);
+            const data = response.data;
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+            setError('An error occurred while trying to add user');
+        }
+    };
+
     const value = {
         modalShow, register, loggedIn, error,
-        loginStatus, registerStatus, setModal, loginAuth
+        loginStatus, registerStatus, setModal, loginAuth, addAccount
     };
 
     return (
