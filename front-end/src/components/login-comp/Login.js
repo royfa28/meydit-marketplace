@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Modal, Form, Button, FloatingLabel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useMyAuthContext } from '../../context/AuthContext';
@@ -7,9 +7,6 @@ import { useMyAuthContext } from '../../context/AuthContext';
 // Login or register modal
 export default function LoginModal(props) {
 
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [userType, setUserType] = useState('consumer');
     const [isRegister, setIsRegister] = useState(true);
 
@@ -20,7 +17,7 @@ export default function LoginModal(props) {
         const formData = new FormData(event.target);
 
         // Check if the user want to register or login
-        if (!register) {
+        if (!isRegister) {
             const userAccount = {
                 emailAddress: formData.get("email"),
                 password: formData.get("password"),
@@ -34,8 +31,10 @@ export default function LoginModal(props) {
                 emailAddress: formData.get("email"),
                 password: formData.get("password"),
                 phoneNumber: formData.get("phone"),
+                userType: userType
             }
-            addAccount(userAccount);
+            // addAccount(userAccount);
+            console.log(userAccount);
         }
     };
 
@@ -56,13 +55,13 @@ export default function LoginModal(props) {
                     )}
 
                     <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
+                        <FloatingLabel controlId="floatingLastName">Email address</FloatingLabel>
+                        <Form.Control type="email" placeholder="Enter email" name="email" />
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+                        <Form.Control type="password" placeholder="Password" name="password" />
                     </Form.Group>
 
                     {/* Check if the user is trying to register or login */}
