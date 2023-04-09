@@ -4,6 +4,7 @@ import "./App.css";
 
 import Header from './components/header-comp/Header';
 import Homepage from './components/homepage-comp/Homepage';
+import AccountPage from './components/account-comp/AccountPage';
 
 
 const App = () => {
@@ -12,6 +13,7 @@ const App = () => {
             <Header />
             <Routes>
                 <Route path="/" element={<Homepage />} />
+                <Route path="/Accountpage" element={<AccountPage />} />
             </Routes>
         </>
     )

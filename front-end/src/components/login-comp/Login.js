@@ -22,7 +22,8 @@ export default function LoginModal(props) {
                 emailAddress: formData.get("email"),
                 password: formData.get("password"),
             }
-            loginAuth(userAccount);
+            console.log(userAccount);
+            // loginAuth(userAccount);
         } else {
             console.log("Register");
             const userAccount = {
