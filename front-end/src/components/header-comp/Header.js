@@ -43,11 +43,6 @@ export default function Header() {
 
                             <LoginModal show={modalShow} onHide={changeModal} />
                         </Col>
-
-                        <Col className="col-1 order-last">
-                            {/* Import cart logo locally */}
-
-                        </Col>
                     </Row>
                 </Container>
             </header>
