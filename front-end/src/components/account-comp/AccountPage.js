@@ -6,7 +6,7 @@ import JWTDecode from "jwt-decode";
 
 import AccDetailsPage from "./AccountDetailsPage";
 // import AccOrderHistoryPage from './AccOrderHistoryPage';
-// import ProductListedPage from './ProductListedPage';
+import ProductListedPage from './ProductListedPage';
 
 // import { useMyAccountContext } from "../../context/accountContext";
 
@@ -47,8 +47,8 @@ export default function AccountPage() {
                         {/* <AccOrderHistoryPage /> */}
                     </Tab>
                     <Tab eventKey="Products Listed" title="Products Listed">
+                        <ProductListedPage />
                         <Link to="/List-Product"><Button >List product</Button></Link>
-                        {/* <ProductListedPage /> */}
                     </Tab>
 
                     <Tab eventKey="Logout" title="Logout">
