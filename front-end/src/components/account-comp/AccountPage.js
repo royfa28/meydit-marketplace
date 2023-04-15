@@ -1,14 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { Tab, Tabs, Button, Container } from 'react-bootstrap';
-import JWTDecode from "jwt-decode";
 
 import AccDetailsPage from "./AccountDetailsPage";
 // import AccOrderHistoryPage from './AccOrderHistoryPage';
 import ProductListedPage from './ProductListedPage';
-
-// import { useMyAccountContext } from "../../context/accountContext";
 
 export default function AccountPage() {
 
@@ -21,19 +18,6 @@ export default function AccountPage() {
         navigate("/");
         window.location.reload();
     }
-    // Import JWTDecode to decode JWT string and decode it
-    const decodedToken = JWTDecode(localStorage.getItem("token"));
-    // const { viewAccount } = useMyAccountContext();
-
-    // Load the view account to get account details for the rest of the page
-    // useEffect(() => {
-    //     viewAccount(decodedToken._id);
-    //     const interval = setInterval(() => {
-    //         viewAccount(decodedToken._id);
-    //     }, 1000 * 3600);
-
-    //     return () => clearInterval(interval);
-    // }, []);
 
     return (
         <>

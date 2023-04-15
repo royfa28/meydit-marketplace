@@ -1,12 +1,23 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { Container, Row, Col, Button } from "react-bootstrap";
-// import { useMyAccountContext } from "../../context/accountContext";
+import { useMyUserContext } from "../../context/UserContext";
+import JWTDecode from "jwt-decode";
 
 export default function AccountDetailsPage() {
 
-    // Load the context needed for the page
-    // const { accountDetails, changePersonalDetails, changeContactDetails,
-    //     setChangePersonalDetails, setChangeContactDetails, updateAccount } = useMyAccountContext();
+    // Import JWTDecode to decode JWT string and decode it
+    const decodedToken = JWTDecode(localStorage.getItem("token"));
+    const { user, viewAccount } = useMyUserContext();
+
+    // Load the view account to get account details for the rest of the page
+    useEffect(() => {
+        viewAccount(decodedToken.email);
+        const interval = setInterval(() => {
+            viewAccount(decodedToken.email);
+        }, 1000 * 3600);
+
+        return () => clearInterval(interval);
+    }, []);
 
     // Function to get the value of either of the input
     const fullNameRef = useRef(null);
@@ -46,7 +57,7 @@ export default function AccountDetailsPage() {
                 {/* {(!changePersonalDetails) ? null : */}
                 <>
                     <Row>
-                        <label>New full name</label>
+                        <label>First name: {user.first_name}</label>
                         <input
                             ref={fullNameRef} type="text" id="fullName" name="fullName"
                         ></input>

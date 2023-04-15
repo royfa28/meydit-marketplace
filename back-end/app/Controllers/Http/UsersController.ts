@@ -60,7 +60,7 @@ export async function login({ request, response }: HttpContextContract) {
         return response.status(400).json({ error: 'Invalid email or password' })
     }
 
-    const token = jwt.sign({ userId: user.id }, 'yourSecretKey', { expiresIn: '1h' })
+    const token = jwt.sign({ email: user.email }, 'yourSecretKey', { expiresIn: '1h' })
 
     return response.json({ message: 'Logged in successfully', token: token })
 }

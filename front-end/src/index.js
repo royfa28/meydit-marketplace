@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { AuthProvider } from './context/AuthContext';
 import JobContext from './context/JobContext';
+import UserContext from "./context/UserContext";
 
 import './index.css';
 import App from './App';
@@ -14,7 +15,9 @@ root.render(
     <BrowserRouter>
         <JobContext>
             <AuthProvider>
-                <App />
+                <UserContext>
+                    <App />
+                </UserContext>
             </AuthProvider>
         </JobContext>
     </BrowserRouter>

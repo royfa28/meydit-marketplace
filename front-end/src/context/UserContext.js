@@ -1,29 +1,24 @@
-import Axios from "../axios";
+import axios from "axios";
 import { createContext, useContext, useState } from "react";
 
 const userCxt = createContext();
 export const useMyUserContext = () => useContext(userCxt);
 
 function AccountContext(props) {
-    const [accountDetails, setAccountDetails] = useState([]);
+    const [user, setUser] = useState([]);
 
-    const viewAccount = (id) => {
-        Axios({
-            url: `Account_Page/${id}`,
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then((response) => {
-            // Set the accountDetails with the response taken from the GET
-            setAccountDetails(response.data);
-            // console.log(response.data);
-        }).catch((error) => {
-            console.log("Internal server error");
-        });
-    }
+    const viewAccount = async (email) => {
+        try {
+            const response = await axios.get(`http://localhost:3333/user/${email}`);
+            setUser(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const Values = {
+        user,
         viewAccount
     }
     return (

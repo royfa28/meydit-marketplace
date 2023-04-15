@@ -8,7 +8,7 @@ import LoginModal from "../login-comp/Login";
 
 export default function Header() {
 
-    const { setModal, modalShow, loggedIn } = useMyAuthContext();
+    const { setModal, modalShow } = useMyAuthContext();
 
     function changeModal() {
         setModal();
@@ -34,8 +34,8 @@ export default function Header() {
                         {/* <!-- If not logged in, will show register/login if not will show account --> */}
                         <Col className="col-1 order-last ">
                             {/* If token for account is there, show account otherwise Login */}
-                            {loggedIn ?
-                                <Link to="/Account_Page">
+                            {localStorage.getItem("token") ?
+                                <Link to="/Accountpage">
                                     <Button variant="primary">Account</Button>
                                 </Link>
                                 :
