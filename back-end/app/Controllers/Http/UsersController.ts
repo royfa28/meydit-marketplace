@@ -8,6 +8,7 @@ import User from 'App/Models/User'
 export async function register({ request, response }: HttpContextContract) {
     try {
         const userData = request.only(['first_name', 'last_name', 'email', 'password', 'phone_number', 'address', 'user_type'])
+        const hashedPassword = await Hash.make(userData.password);
 
         const userExists = await User.findBy('email', userData.email)
 
@@ -19,7 +20,7 @@ export async function register({ request, response }: HttpContextContract) {
         user.first_name = userData.first_name
         user.last_name = userData.last_name
         user.email = userData.email
-        user.password = userData.password
+        user.password = hashedPassword
         user.phone_number = userData.phone_number
         user.user_type = userData.user_type
         user.address = userData.address
@@ -63,14 +64,17 @@ export async function login({ request, response }: HttpContextContract) {
     return response.json({ message: 'Logged in successfully', token: token })
 }
 
-export async function viewUser({ request, response }: HttpContextContract) {
-    const { email } = request.all()
+export async function viewUser({ params }: HttpContextContract) {
+    const email = params.email
 
-    const user = await User.findBy('email', email)
-
-    if (!user) {
-        return response.badRequest({ message: 'User not found' })
+    try {
+        const user = await User.findBy('email', email)
+        if (user) {
+            return user
+        } else {
+            return { error: `User with email ${email} not found` }
+        }
+    } catch (error) {
+        return { error: error.message }
     }
-
-    return user
 }
