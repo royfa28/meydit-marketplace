@@ -1,8 +1,9 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 
-export const JobContext = createContext();
+const jobCxt = createContext();
+export const useMyAuthContext = () => useContext(jobCxt);
 
-const JobContextProvider = ({ children }) => {
+export function JobContextProvider(props) {
     const [jobs, setJobs] = useState([]);
     const [jobDetails, setJobDetails] = useState(null);
 
@@ -34,9 +35,9 @@ const JobContextProvider = ({ children }) => {
         jobs, jobDetails, getAllJobs, getJobDetails
     }
     return (
-        <JobContext.Provider value={Values}>
-            {children}
-        </JobContext.Provider>
+        <jobCxt.Provider value={Values}>
+            {props.children}
+        </jobCxt.Provider>
     );
 };
 
