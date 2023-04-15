@@ -1,4 +1,8 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Hash from '@ioc:Adonis/Core/Hash'
+import { schema, rules } from '@ioc:Adonis/Core/Validator'
+import jwt from 'jsonwebtoken'
+
 import User from 'App/Models/User'
 
 export async function register({ request, response }: HttpContextContract) {
@@ -27,18 +31,36 @@ export async function register({ request, response }: HttpContextContract) {
 }
 
 export async function login({ request, response }: HttpContextContract) {
-    const { email, password } = request.all()
+    const validationSchema = schema.create({
+        email: schema.string({}, [rules.email()]),
+        password: schema.string({}, [rules.minLength(8)])
+    })
 
-    const user = await User.query()
-        .where('email', email)
-        .where('password', password)
-        .first()
+    const userDetails = await request.validate({
+        schema: validationSchema,
+        messages: {
+            'email.required': 'Please enter your email',
+            'email.email': 'Please enter a valid email address',
+            'password.required': 'Please enter your password',
+            'password.minLength': 'Password should be minimum 8 characters'
+        }
+    })
 
-    if (user) {
-        return response.json(user)
-    } else {
+    const user = await User.query().where('email', userDetails.email).first()
+
+    if (!user) {
         return response.status(400).json({ error: 'Invalid email or password' })
     }
+
+    const isPasswordValid = await Hash.verify(userDetails.password, user.password)
+
+    if (!isPasswordValid) {
+        return response.status(400).json({ error: 'Invalid email or password' })
+    }
+
+    const token = jwt.sign({ userId: user.id }, 'yourSecretKey', { expiresIn: '1h' })
+
+    return response.json({ message: 'Logged in successfully', token: token })
 }
 
 export async function viewUser({ request, response }: HttpContextContract) {
