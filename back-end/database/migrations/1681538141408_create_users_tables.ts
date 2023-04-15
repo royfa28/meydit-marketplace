@@ -12,6 +12,7 @@ export default class Users extends BaseSchema {
             table.string("address");
             table.string("email").notNullable().unique();
             table.string("password").notNullable();
+            table.string("user_type").notNullable();
             table.timestamps(true, true);
         });
     }

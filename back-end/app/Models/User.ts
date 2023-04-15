@@ -6,10 +6,10 @@ export default class User extends BaseModel {
     public id: number
 
     @column()
-    public firstName: string
+    public first_name: string
 
     @column()
-    public lastName: string
+    public last_name: string
 
     @column()
     public email: string
@@ -18,7 +18,10 @@ export default class User extends BaseModel {
     public password: string
 
     @column()
-    public phoneNumber: string
+    public phone_number: string
+
+    @column()
+    public user_type: string
 
     @column()
     public address: string
