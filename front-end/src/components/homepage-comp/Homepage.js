@@ -1,4 +1,5 @@
 import React from 'react';
+import JobList from '../body-comp/JobList';
 import { Container, Row, Col } from 'react-bootstrap';
 
 function Homepage() {
@@ -11,6 +12,9 @@ function Homepage() {
                         Discover, buy, and sell unique and artisanal products from around the world.
                     </p>
                 </Col>
+            </Row>
+            <Row>
+                <JobList />
             </Row>
         </Container>
     );

@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-import { Row, Col, Card, Tab, Tabs } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 
 import { Container } from 'react-bootstrap';
 
@@ -38,6 +38,10 @@ export default function JobDetailPage() {
                             </Card.Body>
 
                             <Card.Footer>
+                                {/* Only show this button if you are browsing as a maker */}
+                                {/* {user.type === "maker" && (
+                                    <button>Only visible for maker users</button>
+                                )} */}
                                 Bid ?
                             </Card.Footer>
                         </Card>
