@@ -25,9 +25,16 @@ export function AuthProvider(props) {
     };
 
     // login authentication
-    const loginAuth = async (account) => {
+    const loginAuth = async (email, password) => {
         try {
-            const response = await axios.post('/api/auth/login', { account });
+            // const response = await axios.post('http://localhost:3333/login', { account },
+            //     {
+            //         withCredentials: true, // Send CORS credentials along with request
+            //         headers: {
+            //             'Access-Control-Allow-Origin': 'http://localhost:3000', // Include CORS header
+            //         },
+            //     });
+            const response = await axios.post('http://127.0.0.1:3333/login', { email, password });
             localStorage.setItem('token', response.data.token);
             console.log("login");
             setLoggedIn(true);

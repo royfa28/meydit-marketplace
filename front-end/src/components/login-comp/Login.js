@@ -18,21 +18,21 @@ export default function LoginModal(props) {
 
         // Check if the user want to register or login
         if (!isRegister) {
-            const userAccount = {
-                emailAddress: formData.get("email"),
-                password: formData.get("password"),
-            }
-            console.log(userAccount);
-            // loginAuth(userAccount);
+            // const userAccount = {
+            const email = formData.get("email")
+            const password = formData.get("password")
+            // }
+            // console.log(userAccount);
+            loginAuth(email, password);
         } else {
             console.log("Register");
             const userAccount = {
-                firstName: formData.get("firstName"),
-                lastName: formData.get("lastName"),
-                emailAddress: formData.get("email"),
+                first_name: formData.get("first_name"),
+                last_name: formData.get("last_name"),
+                email: formData.get("email"),
                 password: formData.get("password"),
-                phoneNumber: formData.get("phone"),
-                userType: userType
+                phone_number: formData.get("phone_number"),
+                user_type: userType
             }
             // addAccount(userAccount);
             console.log(userAccount);
@@ -49,9 +49,9 @@ export default function LoginModal(props) {
                     {isRegister && (
                         <Form.Group controlId="formBasicName">
                             <FloatingLabel controlId="floatingFirstName">First Name</FloatingLabel>
-                            <Form.Control type="text" placeholder="Enter first name" name="firstName" required />
+                            <Form.Control type="text" placeholder="Enter first name" name="first_name" required />
                             <FloatingLabel controlId="floatingLastName">Last Name</FloatingLabel>
-                            <Form.Control type="text" placeholder="Enter last name" name="lastName" required />
+                            <Form.Control type="text" placeholder="Enter last name" name="last_name" required />
                         </Form.Group>
                     )}
 
@@ -69,8 +69,8 @@ export default function LoginModal(props) {
                     {isRegister && (
                         <Form.Group>
                             <Form.Label>Register as:</Form.Label>
-                            <Form.Check type="radio" label="Consumer" name="userType" value="consumer" checked={userType === 'consumer'} onChange={() => setUserType('consumer')} />
-                            <Form.Check type="radio" label="Maker" name="userType" value="maker" checked={userType === 'maker'} onChange={() => setUserType('maker')} />
+                            <Form.Check type="radio" label="Consumer" name="user_type" value="consumer" checked={userType === 'consumer'} onChange={() => setUserType('consumer')} />
+                            <Form.Check type="radio" label="Maker" name="user_type" value="maker" checked={userType === 'maker'} onChange={() => setUserType('maker')} />
                         </Form.Group>
                     )}
                     <Button variant="primary" type="submit">

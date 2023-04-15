@@ -32,9 +32,10 @@ export async function register({ request, response }: HttpContextContract) {
 }
 
 export async function login({ request, response }: HttpContextContract) {
+
     const validationSchema = schema.create({
         email: schema.string({}, [rules.email()]),
-        password: schema.string({}, [rules.minLength(8)])
+        password: schema.string({})
     })
 
     const userDetails = await request.validate({
@@ -42,8 +43,7 @@ export async function login({ request, response }: HttpContextContract) {
         messages: {
             'email.required': 'Please enter your email',
             'email.email': 'Please enter a valid email address',
-            'password.required': 'Please enter your password',
-            'password.minLength': 'Password should be minimum 8 characters'
+            'password.required': 'Please enter your password'
         }
     })
 
@@ -53,7 +53,8 @@ export async function login({ request, response }: HttpContextContract) {
         return response.status(400).json({ error: 'Invalid email or password' })
     }
 
-    const isPasswordValid = await Hash.verify(userDetails.password, user.password)
+    // Function to read the hashed value from database and compare it with the passwword from user
+    const isPasswordValid = await Hash.verify(user.password, userDetails.password)
 
     if (!isPasswordValid) {
         return response.status(400).json({ error: 'Invalid email or password' })
