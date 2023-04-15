@@ -26,23 +26,29 @@ export async function register({ request, response }: HttpContextContract) {
     }
 }
 
-export async function login({ request, response, auth }: HttpContextContract) {
-    const email = request.input('email')
-    const password = request.input('password')
+export async function login({ request, response }: HttpContextContract) {
+    const { email, password } = request.all()
 
-    const token = await auth.attempt(email, password)
+    const user = await User.query()
+        .where('email', email)
+        .where('password', password)
+        .first()
 
-    return response.json({
-        status: 'success',
-        token: token.token
-    })
+    if (user) {
+        return response.json(user)
+    } else {
+        return response.status(400).json({ error: 'Invalid email or password' })
+    }
 }
 
-export async function viewUser({ response, auth }: HttpContextContract) {
-    const user = auth.user!
+export async function viewUser({ request, response }: HttpContextContract) {
+    const { email } = request.all()
 
-    return response.json({
-        status: 'success',
-        data: user
-    })
+    const user = await User.findBy('email', email)
+
+    if (!user) {
+        return response.badRequest({ message: 'User not found' })
+    }
+
+    return user
 }
