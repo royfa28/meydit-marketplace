@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 
 const jobCxt = createContext();
 export const useMyAuthContext = () => useContext(jobCxt);
@@ -30,6 +31,15 @@ export function JobContextProvider(props) {
             console.error(error);
         }
     };
+
+    const addJob = async (jobData) => {
+        try {
+
+
+        } catch (err) {
+
+        }
+    }
 
     const Values = {
         jobs, jobDetails, getAllJobs, getJobDetails

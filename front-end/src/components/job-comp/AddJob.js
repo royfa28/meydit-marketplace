@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
+import { useMyUserContext } from "../../context/UserContext";
+import JWTDecode from "jwt-decode";
 import 'react-quill/dist/quill.snow.css';
 
 function AddJob() {
@@ -9,17 +11,35 @@ function AddJob() {
     const [jobDescription, setJobDescription] = useState('');
     const [jobBudget, setJobBudget] = useState('');
 
+    const decodedToken = JWTDecode(localStorage.getItem("token"));
+    const { user, viewAccount } = useMyUserContext();
+
+    const isFormValid = clothingType && jobDescription && jobBudget;
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // submit the form data to the backend API
+        const { first_name, last_name, email } = user;
         const jobData = {
             clothingType,
             jobDescription,
             jobBudget,
+            first_name,
+            last_name,
+            email
         };
 
         console.log(jobData);
     };
+
+    useEffect(() => {
+        viewAccount(decodedToken.email);
+        const interval = setInterval(() => {
+            viewAccount(decodedToken.email);
+        }, 1000 * 3600);
+
+        return () => clearInterval(interval);
+    }, []);
 
     const handleClothingTypeChange = (e) => {
         setClothingType(e.target.value);
@@ -84,7 +104,7 @@ function AddJob() {
                         <Form.Control type="text" placeholder="Enter Price" value={jobBudget} onChange={handlePriceChange} />
                     </Form.Group>
 
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" type="submit" disabled={!isFormValid}>
                         Submit
                     </Button>
                 </Form>
