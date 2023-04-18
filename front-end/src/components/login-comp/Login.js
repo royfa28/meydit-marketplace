@@ -17,7 +17,7 @@ export default function LoginModal(props) {
         const formData = new FormData(event.target);
 
         // Check if the user want to register or login
-        if (!isRegister) {
+        if (isRegister) {
             const email = formData.get("email")
             const password = formData.get("password")
             loginAuth(email, password);
@@ -39,11 +39,11 @@ export default function LoginModal(props) {
     return (
         <Modal {...props} centered>
             <Modal.Header closeButton>
-                <Modal.Title>{isRegister ? 'Register' : 'Login'}</Modal.Title>
+                <Modal.Title>{!isRegister ? 'Register' : 'Login'}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleAuth}>
-                    {isRegister && (
+                    {!isRegister && (
                         <Form.Group controlId="formBasicName">
                             <FloatingLabel controlId="floatingFirstName">First Name</FloatingLabel>
                             <Form.Control type="text" placeholder="Enter first name" name="first_name" required />
@@ -65,7 +65,7 @@ export default function LoginModal(props) {
                     </Form.Group>
 
                     {/* Check if the user is trying to register or login */}
-                    {isRegister && (
+                    {!isRegister && (
                         <Form.Group>
                             <Form.Label>Register as:</Form.Label>
                             <Form.Check type="radio" label="Consumer" name="user_type" value="consumer" checked={userType === 'consumer'} onChange={() => setUserType('consumer')} />
@@ -73,7 +73,7 @@ export default function LoginModal(props) {
                         </Form.Group>
                     )}
                     <Button variant="primary" type="submit">
-                        {isRegister ? 'Register' : 'Login'}
+                        {!isRegister ? 'Register' : 'Login'}
                     </Button>
                 </Form>
             </Modal.Body>

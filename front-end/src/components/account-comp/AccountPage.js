@@ -45,12 +45,6 @@ export default function AccountPage() {
                     </Tab>
                     <Tab eventKey="Products Listed" title="Products Listed">
                         <ProductListedPage />
-                        {user.user_type === "consumer" ?
-                            <Link to="/AddJob">
-                                <Button >List product</Button>
-                            </Link> : null
-                        }
-
                     </Tab>
 
                     <Tab eventKey="Logout" title="Logout">
