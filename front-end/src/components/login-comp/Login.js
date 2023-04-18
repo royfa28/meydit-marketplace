@@ -18,11 +18,8 @@ export default function LoginModal(props) {
 
         // Check if the user want to register or login
         if (!isRegister) {
-            // const userAccount = {
             const email = formData.get("email")
             const password = formData.get("password")
-            // }
-            // console.log(userAccount);
             loginAuth(email, password);
         } else {
             console.log("Register");
@@ -34,7 +31,7 @@ export default function LoginModal(props) {
                 phone_number: formData.get("phone_number"),
                 user_type: userType
             }
-            // addAccount(userAccount);
+            addAccount(userAccount);
             console.log(userAccount);
         }
     };
@@ -52,6 +49,8 @@ export default function LoginModal(props) {
                             <Form.Control type="text" placeholder="Enter first name" name="first_name" required />
                             <FloatingLabel controlId="floatingLastName">Last Name</FloatingLabel>
                             <Form.Control type="text" placeholder="Enter last name" name="last_name" required />
+                            <FloatingLabel controlId="floatingPhoneNumber">Phone Number</FloatingLabel>
+                            <Form.Control type="number" placeholder="Enter phone number" name="phone_number" required />
                         </Form.Group>
                     )}
 

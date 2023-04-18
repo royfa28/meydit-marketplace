@@ -24,7 +24,7 @@ export function AuthProvider(props) {
         try {
             const response = await axios.post('http://127.0.0.1:3333/login', { email, password });
             localStorage.setItem('token', response.data.token);
-            console.log("login");
+            window.location.reload();
             setError(null);
             return true;
         } catch (err) {
@@ -35,9 +35,10 @@ export function AuthProvider(props) {
 
     const addAccount = async (account) => {
         try {
-            const response = await axios.post('/api/register', account);
-            const data = response.data;
-            console.log(data);
+            const response = await axios.post('http://127.0.0.1:3333/register', account);
+
+            localStorage.setItem('token', response.data.token);
+            window.location.reload();
         } catch (error) {
             console.log(error);
             setError('An error occurred while trying to add user');

@@ -13,7 +13,7 @@ export default function AccountPage() {
 
     const navigate = useNavigate();
     const decodedToken = JWTDecode(localStorage.getItem("token"));
-    const { viewAccount } = useMyUserContext();
+    const { user, viewAccount } = useMyUserContext();
 
     // When logout was selected, remove token from local storage and go back to windows
     function logout() {
@@ -45,7 +45,12 @@ export default function AccountPage() {
                     </Tab>
                     <Tab eventKey="Products Listed" title="Products Listed">
                         <ProductListedPage />
-                        <Link to="/AddJob"><Button >List product</Button></Link>
+                        {user.user_type === "consumer" ?
+                            <Link to="/AddJob">
+                                <Button >List product</Button>
+                            </Link> : null
+                        }
+
                     </Tab>
 
                     <Tab eventKey="Logout" title="Logout">
