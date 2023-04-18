@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
-import { useMyUserContext } from "../../context/UserContext";
 import JWTDecode from "jwt-decode";
+
+import { useMyUserContext } from "../../context/UserContext";
+import { useMyJobContext } from '../../context/JobContext';
 import 'react-quill/dist/quill.snow.css';
 
 function AddJob() {
@@ -13,23 +15,23 @@ function AddJob() {
 
     const decodedToken = JWTDecode(localStorage.getItem("token"));
     const { user, viewAccount } = useMyUserContext();
-
-    const isFormValid = clothingType && jobDescription && jobBudget;
+    const { addJob } = useMyJobContext();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const formData = new FormData(e.target);
         // submit the form data to the backend API
-        const { first_name, last_name, email } = user;
+        const user_id = user.id;
         const jobData = {
+            job_title: formData.get("job_title"),
             clothingType,
             jobDescription,
             jobBudget,
-            first_name,
-            last_name,
-            email
+            user_id
         };
-
-        console.log(jobData);
+        addJob(jobData);
+        // console.log(jobData);
     };
 
     useEffect(() => {
@@ -63,10 +65,14 @@ function AddJob() {
             <Container>
                 <Form onSubmit={handleSubmit}>
 
+                    <Form.Group controlId="formBasicTitle">
+                        <Form.Label>Job Title</Form.Label>
+                        <Form.Control type="text" placeholder="Put your job title" name="job_title" required />
+                    </Form.Group>
                     {/* Consumer can select what type of clothing they want to list */}
                     <Form.Group controlId="type">
                         <Form.Label>Type of Clothing</Form.Label>
-                        <Form.Control as="select" value={clothingType} onChange={handleClothingTypeChange}>
+                        <Form.Control as="select" value={clothingType} onChange={handleClothingTypeChange} required>
                             <option value="">Select Type</option>
                             <option value="Dress">Dress</option>
                             <option value="Ethnic Wear - Sari / Blouse">Ethnic Wear - Sari / Blouse</option>
@@ -101,10 +107,10 @@ function AddJob() {
 
                     <Form.Group controlId="price">
                         <Form.Label>Price</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Price" value={jobBudget} onChange={handlePriceChange} />
+                        <Form.Control type="number" placeholder="Enter Price" value={jobBudget} onChange={handlePriceChange} required />
                     </Form.Group>
 
-                    <Button variant="primary" type="submit" disabled={!isFormValid}>
+                    <Button variant="primary" type="submit">
                         Submit
                     </Button>
                 </Form>

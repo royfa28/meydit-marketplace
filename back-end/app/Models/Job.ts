@@ -7,10 +7,13 @@ export default class Job extends BaseModel {
     public id: number
 
     @column()
-    public jobTitle: string
+    public title: string
 
     @column()
     public category: string
+
+    @column()
+    public description: string
 
     @column({ serializeAs: null })
     public budget: number
@@ -22,7 +25,7 @@ export default class Job extends BaseModel {
     public updatedAt: DateTime
 
     @column()
-    public userId: number
+    public user_id: number
 
     @belongsTo(() => User)
     public user: BelongsTo<typeof User>
