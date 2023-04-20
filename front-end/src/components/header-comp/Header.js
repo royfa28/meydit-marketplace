@@ -22,9 +22,9 @@ export default function Header() {
         const token = localStorage.getItem('token');
         if (token) {
             const decodedToken = JWTDecode(localStorage.getItem("token"));
-            viewAccount(decodedToken.email);
+            viewAccount(decodedToken.id);
             const interval = setInterval(() => {
-                viewAccount(decodedToken.email);
+                viewAccount(decodedToken.id);
             }, 1000 * 3600);
 
             return () => clearInterval(interval);
