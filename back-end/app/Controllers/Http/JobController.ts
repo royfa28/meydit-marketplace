@@ -1,16 +1,20 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Job from 'App/Models/Job'
 
-export async function index({ response }: HttpContextContract) {
+export async function getJobs({ response }: HttpContextContract) {
     const jobs = await Job.all()
 
     return response.json(jobs)
 }
 
-export async function jobDetails({ params, response }: HttpContextContract) {
-    const job = await Job.findOrFail(params.id)
+export async function jobDetails({ params }: HttpContextContract) {
+    const jobDetails = await Job.find(params.id)
 
-    return response.json(job)
+    if (!jobDetails) {
+        return 'Job not found'
+    }
+
+    return jobDetails
 }
 
 export async function addJob({ request, response }: HttpContextContract) {
