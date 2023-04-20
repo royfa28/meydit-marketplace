@@ -15,6 +15,7 @@ export function JobContextProvider(props) {
 
     const getAllJobs = async () => {
         try {
+            // Get All jobs from server, map them and add user to each job data.
             const response = await axios.get('http://127.0.0.1:3333/getJobs');
             const jobsWithUser = await Promise.all(response.data.map(async (job) => {
                 const userResponse = await axios.get(`http://localhost:3333/user/${job.user_id}`)
@@ -33,9 +34,17 @@ export function JobContextProvider(props) {
 
     const getJobDetails = async (jobId) => {
         try {
-            const response = await fetch(`/api/jobDetails/${jobId}`);
-            const data = await response.json();
-            setJobDetails(data);
+            // Get job data from server
+            const jobresponse = await axios.get(`http://127.0.0.1:3333/job-details/${jobId}`);
+            const job = jobresponse.data;
+
+            // Get user data from server
+            const userResponse = await axios.get(`http://127.0.0.1:3333/user/${job.user_id}`);
+            const user = userResponse.data;
+
+            const jobsWithUser = { ...job, user }
+            // console.log(jobsWithUser)
+            setJobDetails(jobsWithUser);
         } catch (error) {
             console.error(error);
         }

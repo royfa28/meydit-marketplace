@@ -11,19 +11,21 @@ export default function JobDetailPage() {
 
     // Get the params that was passed from ProductCard.js
     const params = useParams();
-    const { jobs } = useMyJobContext();
-    const job = jobs[params.jobID - 1];
+    const { jobDetails, getJobDetails } = useMyJobContext();
 
-    // Get data from database, with the productID as the parameter
-    // useEffect(() => {
-    //     axios.get(`/api/jobs/${jobId}`).then((res) => {
-    //         setJob(res.data);
-    //     });
-    // }, [jobId]);
+    // Get data from database, with the jobID as the parameter
+    useEffect(() => {
+        getJobDetails(params.jobID);
+        const interval = setInterval(() => {
+            getJobDetails();
+        }, 1000 * 60);
+
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <div>
-            {console.log(job)}
+            {console.log(jobDetails)}
             <Container className='mt-4'>
                 <Row className="Product-Page justify-content-between">
                     <Col md={7} xs={12} className="product-Col">
@@ -35,9 +37,9 @@ export default function JobDetailPage() {
                         <Card className="product-card">
                             <Card.Body>
                                 <h2>Job Title</h2>
-                                <p>By: {job.user.first_name + " " + job.user.last_name} </p>
-                                <p>Category: {job.category}</p>
-                                <p>Budget: ${job.budget}</p>
+                                <p>By: {jobDetails.user.first_name + " " + jobDetails.user.last_name} </p>
+                                <p>Category: {jobDetails.category}</p>
+                                <p>Budget: ${jobDetails.budget}</p>
                             </Card.Body>
 
                             <Card.Footer>
@@ -54,7 +56,7 @@ export default function JobDetailPage() {
                 <Row>
                     <Col>
                         <h5>Job Description</h5>
-                        <div dangerouslySetInnerHTML={{ __html: job.description }} />
+                        <div dangerouslySetInnerHTML={{ __html: jobDetails.description }} />
                     </Col>
                 </Row>
             </Container>
