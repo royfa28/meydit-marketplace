@@ -27,9 +27,9 @@ function JobList() {
                     return (
 
                         <Col className="mb-4" key={index}>
-                            <Card>
+                            <Card style={{ height: '300px' }}>
                                 <Link to={`/job-details/${job.id}`}>
-                                    <Card.Img variant="top" />
+                                    <Card.Img variant="top" style={{ height: '150px' }} />
                                     <Card.Body>
                                         <Card.Title>{job.title}</Card.Title>
                                         <Card.Text>Budget: ${job.budget}</Card.Text>

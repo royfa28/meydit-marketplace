@@ -6,7 +6,7 @@ export default class Job extends BaseModel {
     @column({ isPrimary: true })
     public id: number
 
-    @column()
+    @column({ serialize: (value: string | null) => value !== null ? value : 'No Title', })
     public title: string
 
     @column()
