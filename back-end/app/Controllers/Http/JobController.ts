@@ -3,7 +3,7 @@ import Job from 'App/Models/Job'
 
 export async function getJobs({ response }: HttpContextContract) {
     const jobs = await Job.all()
-
+    console.log(jobs);
     return response.json(jobs)
 }
 

@@ -15,8 +15,8 @@ export default class Job extends BaseModel {
     @column()
     public description: string
 
-    @column({ serializeAs: null })
-    public budget: number
+    @column({ serialize: (value: number | null) => value !== null ? value : 0, })
+    public budget: string
 
     @column.dateTime({ autoCreate: true })
     public createdAt: DateTime

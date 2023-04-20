@@ -14,9 +14,8 @@ export function JobContextProvider(props) {
 
     const getAllJobs = async () => {
         try {
-            const response = await fetch('/api/jobs');
-            const data = await response.json();
-            setJobs(data);
+            const response = await axios.get('http://127.0.0.1:3333/getJobs');
+            setJobs(response.data);
         } catch (error) {
             console.error(error);
         }
