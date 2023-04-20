@@ -24,9 +24,10 @@ export default function AccountPage() {
     }
 
     useEffect(() => {
-        viewAccount(decodedToken.email);
+        viewAccount(decodedToken.id);
+        console.log(decodedToken.id)
         const interval = setInterval(() => {
-            viewAccount(decodedToken.email);
+            viewAccount(decodedToken.id);
         }, 1000 * 3600);
 
         return () => clearInterval(interval);

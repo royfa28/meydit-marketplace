@@ -7,9 +7,9 @@ export const useMyUserContext = () => useContext(userCxt);
 function AccountContext(props) {
     const [user, setUser] = useState([]);
 
-    const viewAccount = async (email) => {
+    const viewAccount = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:3333/user/${email}`);
+            const response = await axios.get(`http://localhost:3333/user/${id}`);
             setUser(response.data);
             console.log(response.data);
         } catch (error) {

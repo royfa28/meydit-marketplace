@@ -2,15 +2,17 @@
 import React, { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card, Container } from 'react-bootstrap';
 
-import { Container } from 'react-bootstrap';
+import { useMyJobContext } from '../../context/JobContext';
 
 // This page is the product details page, which will show individual product details
 export default function JobDetailPage() {
 
     // Get the params that was passed from ProductCard.js
-    const { jobId } = useParams();
+    const params = useParams();
+    const { jobs } = useMyJobContext();
+    const job = jobs[params.jobID - 1];
 
     // Get data from database, with the productID as the parameter
     // useEffect(() => {
@@ -21,6 +23,7 @@ export default function JobDetailPage() {
 
     return (
         <div>
+            {console.log(job)}
             <Container className='mt-4'>
                 <Row className="Product-Page justify-content-between">
                     <Col md={7} xs={12} className="product-Col">
@@ -32,9 +35,9 @@ export default function JobDetailPage() {
                         <Card className="product-card">
                             <Card.Body>
                                 <h2>Job Title</h2>
-                                <p>By: username </p>
-                                <p>Category: </p>
-                                <p>Budget: $</p>
+                                <p>By: {job.user.first_name + " " + job.user.last_name} </p>
+                                <p>Category: {job.category}</p>
+                                <p>Budget: ${job.budget}</p>
                             </Card.Body>
 
                             <Card.Footer>
@@ -51,14 +54,7 @@ export default function JobDetailPage() {
                 <Row>
                     <Col>
                         <h5>Job Description</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod mi vitae sapien faucibus, a semper nunc vulputate. </p>
-                        <p>Ut at mauris ut enim fermentum dignissim. Morbi pharetra, leo sed aliquam porttitor, libero mi iaculis mi, at aliquet velit velit sed elit. Ut at mauris ut enim fermentum dignissim. </p>
-                        <ul>
-                            <li>Proin eleifend orci vel nisi viverra, non gravida purus convallis.</li>
-                            <li>Maecenas lacinia velit a nisi malesuada, et tempus ex faucibus.</li>
-                            <li>Donec eget sem at neque tincidunt interdum.</li>
-                        </ul>
-                        <p>Suspendisse semper, augue vel consequat finibus, enim velit congue ante, ut ullamcorper nibh sapien ut felis. Nam nec bibendum purus. Duis ut pharetra purus, vel maximus lacus. Pellentesque ut ipsum dolor. Donec scelerisque auctor velit ut eleifend. </p>
+                        <div dangerouslySetInnerHTML={{ __html: job.description }} />
                     </Col>
                 </Row>
             </Container>

@@ -9,4 +9,4 @@ Route.post("/login", login);
 Route.post("/addJob", addJob);
 Route.get("/job-details/:id", jobDetails);
 Route.get("/getJobs", getJobs)
-Route.get("/user/:email", viewUser);
+Route.get("/user/:id", viewUser);

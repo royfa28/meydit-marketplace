@@ -60,20 +60,20 @@ export async function login({ request, response }: HttpContextContract) {
         return response.status(400).json({ error: 'Invalid email or password' })
     }
 
-    const token = jwt.sign({ email: user.email }, 'yourSecretKey', { expiresIn: '1h' })
+    const token = jwt.sign({ id: user.id }, 'yourSecretKey', { expiresIn: '1h' })
 
     return response.json({ message: 'Logged in successfully', token: token })
 }
 
 export async function viewUser({ params }: HttpContextContract) {
-    const email = params.email
+    const id = params.id
 
     try {
-        const user = await User.findBy('email', email)
+        const user = await User.find(id)
         if (user) {
             return user
         } else {
-            return { error: `User with email ${email} not found` }
+            return { error: `User with email ${id} not found` }
         }
     } catch (error) {
         return { error: error.message }
