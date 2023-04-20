@@ -17,15 +17,20 @@ export default function JobDetailPage() {
     useEffect(() => {
         getJobDetails(params.jobID);
         const interval = setInterval(() => {
-            getJobDetails();
+            getJobDetails(params.jobID);
         }, 1000 * 60);
 
         return () => clearInterval(interval);
     }, []);
 
+    // This function is to just show a loading screen before the job details get loaded
+    if (!jobDetails) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div>
-            {console.log(jobDetails)}
+            {/* {console.log(jobDetails)} */}
             <Container className='mt-4'>
                 <Row className="Product-Page justify-content-between">
                     <Col md={7} xs={12} className="product-Col">

@@ -43,7 +43,7 @@ export function JobContextProvider(props) {
             const user = userResponse.data;
 
             const jobsWithUser = { ...job, user }
-            // console.log(jobsWithUser)
+            console.log(jobsWithUser)
             setJobDetails(jobsWithUser);
         } catch (error) {
             console.error(error);
