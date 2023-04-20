@@ -28,7 +28,7 @@ function JobList() {
 
                         <Col className="mb-4" key={index}>
                             <Card style={{ height: '300px' }}>
-                                <Link to={`/job-details/${job.id}`}>
+                                <Link to={`/job-details/${job.id}`} style={{ textDecoration: 'none' }}>
                                     <Card.Img variant="top" style={{ height: '150px' }} />
                                     <Card.Body>
                                         <Card.Title>{job.title}</Card.Title>

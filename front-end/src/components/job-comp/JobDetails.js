@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { Row, Col, Card, Container } from 'react-bootstrap';
 
 import { useMyJobContext } from '../../context/JobContext';
+import { useMyUserContext } from '../../context/UserContext';
 
 // This page is the product details page, which will show individual product details
 export default function JobDetailPage() {
@@ -12,6 +13,7 @@ export default function JobDetailPage() {
     // Get the params that was passed from ProductCard.js
     const params = useParams();
     const { jobDetails, getJobDetails } = useMyJobContext();
+    const { user } = useMyUserContext();
 
     // Get data from database, with the jobID as the parameter
     useEffect(() => {
@@ -49,9 +51,9 @@ export default function JobDetailPage() {
 
                             <Card.Footer>
                                 {/* Only show this button if you are browsing as a maker */}
-                                {/* {user.type === "maker" && (
+                                {user.user_type === "maker" && (
                                     <button>Only visible for maker users</button>
-                                )} */}
+                                )}
                                 Bid ?
                             </Card.Footer>
                         </Card>

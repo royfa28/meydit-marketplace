@@ -11,7 +11,7 @@ function AccountContext(props) {
         try {
             const response = await axios.get(`http://localhost:3333/user/${id}`);
             setUser(response.data);
-            console.log(response.data);
+            // console.log(response.data);
         } catch (error) {
             console.error(error);
         }
