@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import JobContext from './context/JobContext';
 import UserContext from "./context/UserContext";
+import EmailContext from "./context/EmailContext";
 
 import './index.css';
 import App from './App';
@@ -16,7 +17,9 @@ root.render(
         <JobContext>
             <AuthProvider>
                 <UserContext>
-                    <App />
+                    <EmailContext>
+                        <App />
+                    </EmailContext>
                 </UserContext>
             </AuthProvider>
         </JobContext>

@@ -6,6 +6,7 @@ import { Row, Col, Card, Container } from 'react-bootstrap';
 
 import { useMyJobContext } from '../../context/JobContext';
 import { useMyUserContext } from '../../context/UserContext';
+import { useMyEmailContext } from '../../context/EmailContext';
 
 // This page is the product details page, which will show individual product details
 export default function JobDetailPage() {
@@ -14,6 +15,7 @@ export default function JobDetailPage() {
     const params = useParams();
     const { jobDetails, getJobDetails } = useMyJobContext();
     const { user } = useMyUserContext();
+    const { sendEmail } = useMyEmailContext();
 
     // Get data from database, with the jobID as the parameter
     useEffect(() => {
@@ -28,6 +30,17 @@ export default function JobDetailPage() {
     // This function is to just show a loading screen before the job details get loaded
     if (!jobDetails) {
         return <div>Loading...</div>;
+    }
+
+    function onClickSendEmail() {
+        const emailData = {
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: jobDetails.user.email,
+            jobID: params.jobID,
+            quote: '300'
+        };
+        sendEmail(emailData);
     }
 
     return (
@@ -52,9 +65,8 @@ export default function JobDetailPage() {
                             <Card.Footer>
                                 {/* Only show this button if you are browsing as a maker */}
                                 {user.user_type === "maker" && (
-                                    <button>Only visible for maker users</button>
+                                    <button onClick={onClickSendEmail}>Send email</button>
                                 )}
-                                Bid ?
                             </Card.Footer>
                         </Card>
                     </Col>
