@@ -14,18 +14,24 @@ const transporter = nodemailer.createTransport({
 })
 
 export async function sendEmail({ request, response }: HttpContextContract) {
-    const { first_name, last_name, email, jobID, quote } = request.body()
+    const { first_name, last_name, email, jobID, quote, comment } = request.body()
 
 
     const mailOptions = {
         from: 'youremail@gmail.com',
         to: email,
         subject: `${first_name} ${last_name} has sent you an offer for the job`,
-        text: `Hello,\n\n${first_name} ${last_name} has sent you an offer for the job ${jobID}: $${quote}`
+        html:
+            `<h2> You have received an offer for the job </h2>\n\n
+        ${first_name} ${last_name} has sent you an offer for the job ${jobID}: $${quote}\n
+        With the following comments: \n
+        ${comment}        
+        `
     }
 
     try {
         await transporter.sendMail(mailOptions)
+        console.log(mailOptions);
         response.status(200).send('Email sent')
     } catch (error) {
         response.status(500).send('Error sending email ' + error)

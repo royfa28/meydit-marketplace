@@ -11,6 +11,7 @@ function EmailContext(props) {
             const response = await axios.post('http://localhost:3333/sendEmail', emailData);
             // const data = await response.json();
             console.log("It work");
+            window.location.reload();
         } catch (error) {
             console.error(error);
         }
